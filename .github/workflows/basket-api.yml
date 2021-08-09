@@ -5,7 +5,7 @@ on:
   push:
     branches:
     - dev
-    - *
+    - experiment/*
 
     paths:
     - src/BuildingBlocks/**
