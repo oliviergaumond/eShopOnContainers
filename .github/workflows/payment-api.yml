@@ -1,6 +1,7 @@
 name: payment-api
 
 on:
+  workflow_dispatch:
   push:
     branches:
     - dev

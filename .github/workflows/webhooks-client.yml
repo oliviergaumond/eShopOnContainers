@@ -1,6 +1,7 @@
 name: webhooks-client
 
 on:
+  workflow_dispatch:
   push:
     branches:
     - dev
