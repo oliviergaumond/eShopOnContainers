@@ -111,7 +111,7 @@ jobs:
       shell: bash
       env:
         TAG: ${{ env.BRANCH }}
-        REGISTRY: ${{ secrets.REGISTRY_ENDPOINT }}
+      #  REGISTRY: ${{ secrets.REGISTRY_ENDPOINT }}
 
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
