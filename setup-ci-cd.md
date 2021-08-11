@@ -1,3 +1,8 @@
+
+# Setting up eShop on Azure
+ 
+
+
 # CI/CD setup with GitHub Actions
 
 
@@ -33,7 +38,7 @@ az ad sp show --id 22424529-05a4-4a6f-9336-b61a52157342 --query appId --output t
 Find the appId and password from Service Principal and create GitHub secrets
 
 REGISTRY_HOST -> acrHost
-REGISTRY_ENDPOINT -> $acrHost/eshop ???
+REGISTRY_ENDPOINT -> eshop
 USERNAME -> spnId
 PASSWORD -> spnPassword
 
@@ -50,4 +55,3 @@ If the build was successfull you should see the repository and image created in 
 
 Questions
 - Why not all yaml file have a workflow_dispatch?
-- Difference between REGISTRY_ENDPOINT and REGISTRY_HOST (OK)
