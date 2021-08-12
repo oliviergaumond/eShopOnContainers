@@ -209,7 +209,8 @@ fi
 
 echo "#################### Begin $app_name installation using Helm ####################"
 infras=(sql-data nosql-data rabbitmq keystore-data basket-data)
-charts=(eshop-common apigwms apigwws basket-api catalog-api identity-api mobileshoppingagg ordering-api ordering-backgroundtasks ordering-signalrhub payment-api webmvc webshoppingagg webspa webstatus webhooks-api webhooks-web)
+charts=(eshop-common basket-api catalog-api identity-api mobileshoppingagg ordering-api ordering-backgroundtasks ordering-signalrhub payment-api webmvc webshoppingagg webspa webstatus webhooks-api webhooks-web)
+gateways=(apigwms apigwws)
 
 if [[ !$skip_infrastructure ]]; then
   for infra in "${infras[@]}"
@@ -227,6 +228,13 @@ do
     elif [[ $chart != "eshop-common" ]]; then  # eshop-common is ignored when no secret must be deployed
       helm install "$app_name-$chart" --namespace $namespace --set "ingress.hosts={$dns}" --values app.yaml --values inf.yaml --values $ingress_values_file --set app.name=$app_name --set inf.k8s.dns=$dns --set image.tag=$image_tag --set image.pullPolicy=Always $chart 
     fi
+done
+
+for gw in "${gateways[@]}"
+do
+    echo "Installing gateway: $gw"
+    helm install "$app_name-$gw" --namespace $namespace --set "ingress.hosts={$dns}" --values app.yaml --values inf.yaml --values $ingress_values_file --set app.name=$app_name --set inf.k8s.dns=$dns --set image.pullPolicy=Always $gw 
+
 done
 
 echo "FINISHED: Helm charts installed."
