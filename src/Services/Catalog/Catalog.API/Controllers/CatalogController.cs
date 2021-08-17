@@ -63,9 +63,9 @@ namespace Microsoft.eShopOnContainers.Services.Catalog.API.Controllers
             /* The "awesome" fix for testing Devspaces */
 
             
-            foreach (var pr in itemsOnPage) {
-                pr.Name = "Awesome " + pr.Name;
-            }
+            // foreach (var pr in itemsOnPage) {
+            //     pr.Name = "Awesome " + pr.Name;
+            // }
 
             
 
