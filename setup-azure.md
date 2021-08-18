@@ -16,7 +16,7 @@ Pre-requisites
 - You will need an Azure account and subscription
 - We will setup everything using the Azure Cloud Shell so you don't have any tools to install locally
 
-WARNING: by creating the Azure resources in this walkthrough you will incur some costs. The exact cost will depend on the size of node instance you use as well as if you let the AKS cluster run 24/7 or not. If you simply create and then destroy everyting after the test in the same day you should not incur more than a few dollars of Azure costs.
+WARNING: by creating the Azure resources in this walkthrough you will incur some costs. The exact cost will depend on the size of node instance you use as well as if you let the AKS cluster run 24/7 or not. If you simply create and then destroy everything after the test in the same day you should not incur more than a few dollars of Azure costs.
 
 ## Clone project in Cloud Shell
 First you will need to create a fork of the [eShopOnContainers](https://github.com/dotnet-architecture/eShopOnContainers) GitHub project so you can have your own version of the project to enable the GitHub actions. Or you can start from [my fork](https://github.com/oliviergaumond/eShopOnContainers) which already contain some fixes and enhancements to some scripts
@@ -28,7 +28,7 @@ git clone <url of your repo>
 ```
 
 ## Create the Azure resources
-Now we will create the necessary Azure resources to run the application. We need a Resource Group, an Azure Container Registry and an AKS cluster. We will also create a Azure AD Service principal so that GitHub actions can push images to our registry and deploy resources in AKS. See the warning above about costs you will incur for thoses resources
+Now we will create the necessary Azure resources to run the application. We need a Resource Group, an Azure Container Registry and an AKS cluster. We will also create a Azure AD Service principal so that GitHub actions can push images to our registry and deploy resources in AKS. See the warning above about costs you will incur for those resources
 
 You should set the first 5 variables for the name of your resources and AKS node VM size.
 Note: the ACR name needs to be unique across Azure. It should only contain alphanumeric characters (no dot or dash).
@@ -67,7 +67,7 @@ az aks get-credentials --resource-group $rg --name $aks
 ## Configure GitHub secrets
 We now need to create a few secrets in GitHub to configure the build and deploy pipelines.
 
-Most of the values needed were stored in variables from the previous script. You can print them in your shell. You can also not these values and in particular the password in a safe place, because you won't be able to retrieve them once you close your Clous Shell.
+Most of the values needed were stored in variables from the previous script. You can print them in your shell. You can also not these values and in particular the password in a safe place, because you won't be able to retrieve them once you close your Cloud Shell.
 ```
 echo $acrHost
 echo $spnId
@@ -85,7 +85,7 @@ CLUSTER_NAME -> <value of $aks>
 RESOURCE_GROUP -> <value of $rg>
 AZURE_CREDENTIALS -> { "clientId": "<value of $spnId>", "clientSecret": "<value of $spnPassword>", "tenantId": "<Azure tenant GUID>", "subscriptionId": "<Azure subscription ID>" }
 
-The AZURE_CREDENTIALS secret is the one that will require the most manipulation, make sure to replace the proper values to form a valid JSON configuration. You can find your subscription and tenand ID from the Azure portal.
+The AZURE_CREDENTIALS secret is the one that will require the most manipulation, make sure to replace the proper values to form a valid JSON configuration. You can find your subscription and tenant ID from the Azure portal.
 
 Once done you should have all your secrets configured
 ![github-secrets](img/og/github-secrets.png)
@@ -102,7 +102,7 @@ Manually run a workflow (basket-api)
 Check the status of the workflow
 ![check-status](img/og/github-actions-status.png)
 
-If the build was successfull you should see the repository and image created in your Azure Container Registry
+If the build was successful you should see the repository and image created in your Azure Container Registry
 
 Trigger the build for all images by manually triggering all actions that don't start with 'deploy'. When all workflows have run successfully you should see a total of 14 repositories in your registry.
 ![repositories](img/og/acr-repo-all.png)
@@ -110,7 +110,7 @@ Trigger the build for all images by manually triggering all actions that don't s
 Note: in the original repository some of the workflow files didn't had the `workflow_dispatch` configuration to enable the manual trigger. I added these in my version, you can do the same.
 
 ## Pre-setup
-Next we have some additionnal configurations to run on the AKS cluster before deploying the application.
+Next we have some additional configurations to run on the AKS cluster before deploying the application.
 
 Run these commands in your cloud shell. Make sure you are located at the root directory where you cloned the repository.
 ```
@@ -137,7 +137,7 @@ Run the following script in your cloud shell.
 ```
 cd -
 cd deploy/k8s/helm
-./deploy-all.sh --aks-name eshopaks-og --aks-rg eshop-rg --dns aks --app-name eshop --namespace eshop --tag linux-dev --skip-clean --registry $acrHost --docker-username $spnId --docker-password $spnPassword
+./deploy-all.sh --aks-name eshopaks-og --aks-rg eshop-rg --dns aks --app-name eshop --namespace eshop --tag linux-dev --registry $acrHost --docker-username $spnId --docker-password $spnPassword
 ```
 
 NOTE: if you forked directly from the official repository you may see that the apigwms and apigwws are not deploying correctly. There is an issue with the script. You can use my version of the [deploy-all.sh script](https://github.com/oliviergaumond/eShopOnContainers/blob/dev/deploy/k8s/helm/deploy-all.sh) which is fixed.
@@ -159,7 +159,7 @@ It may take a few minutes for all services to start, but eventually the webstatu
 ![webstatus](img/og/webstatus.png)
 
 ## Enable deployment
-Now that the initial deployment is working correclty we can test the automatic deployment of a code change.
+Now that the initial deployment is working correctly we can test the automatic deployment of a code change.
 
 First we need to enable the deploy workflows in the GitHub Actions.
 
@@ -175,7 +175,7 @@ And comment this line just below
 Make sure to commit and push your changes.
 
 ## Test a change
-We can now simultate a change in the code and push it and see it deploy automatically. There is pre-defined piece of code ready for that, you can see the instructions here
+We can now simulate a change in the code and push it and see it deploy automatically. There is pre-defined piece of code ready for that, you can see the instructions here
 https://github.com/dotnet-architecture/eShopOnContainers/wiki/Deployment-With-GitHub-Actions#release-a-code-change
 
 
