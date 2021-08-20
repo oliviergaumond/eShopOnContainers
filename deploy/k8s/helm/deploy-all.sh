@@ -45,6 +45,8 @@ Parameters:
     Deploy to a locally installed Kubernetes (default: false).
   --use-mesh
     Use Linkerd as service mesh
+  --image-pull-policy
+    Image Pull Policy: Always, IfNotPresent, Never (default: Always)
 
 It is assumed that the Kubernetes cluster has been granted access to the container registry.
 If using AKS and ACR see link for more info: 
@@ -76,6 +78,7 @@ use_local_k8s=''
 namespace='eshop'
 use_mesh='false'
 ingressMeshAnnotationsFile='ingress_values_linkerd.yaml'
+imagePullPolicy='Always'
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -113,11 +116,18 @@ while [[ $# -gt 0 ]]; do
       namespace="$2"; shift 2;;
     --use-mesh )
       use_mesh='true'; shift ;;
+    --image-pull-policy )
+      imagePullPolicy="$2"; shift 2;;
     *)
       echo "Unknown option $1"
       usage; exit 2 ;;
   esac
 done
+
+if [[ $imagePullPolicy != "Always" && $imagePullPolicy != "Never" && $imagePullPolicy != "IfNotPresent" ]]; then
+  echo "--image-pull-policy needs to be a valid value: Always, IfNotPresent, Never"
+  usage; exit 2;
+fi
 
 if [[ $build_solution ]]; then
   echo "#################### Building $app_name solution ####################"
@@ -229,18 +239,17 @@ fi
 for chart in "${charts[@]}"
 do
     echo "Installing: $chart"
-    if [[ $use_custom_registry ]]; then 
-      helm install "$app_name-$chart" --namespace $namespace --set "ingress.hosts={$dns}" --set inf.registry.server=$container_registry --set inf.registry.login=$docker_username --set inf.registry.pwd=$docker_password --set inf.registry.secretName=eshop-docker-scret --values app.yaml --values inf.yaml --values $ingress_values_file --values $ingressMeshAnnotationsFile  --set app.name=$app_name --set inf.k8s.dns=$dns --set image.tag=$image_tag --set image.pullPolicy=Always $chart --set inf.mesh.enabled=$use_mesh
-    elif [[ $chart != "eshop-common" ]]; then  # eshop-common is ignored when no secret must be deployed
-      helm install "$app_name-$chart" --namespace $namespace --set "ingress.hosts={$dns}" --values app.yaml --values inf.yaml --values $ingress_values_file --values $ingressMeshAnnotationsFile --set app.name=$app_name --set inf.k8s.dns=$dns --set image.tag=$image_tag --set image.pullPolicy=Always $chart --set inf.mesh.enabled=$use_mesh
+    if [[ $use_custom_registry ]]; then       
+      helm install "$app_name-$chart" --namespace $namespace --set "ingress.hosts={$dns}" --set inf.registry.server=$container_registry --set inf.registry.login=$docker_username --set inf.registry.pwd=$docker_password --set inf.registry.secretName=eshop-docker-scret --values app.yaml --values inf.yaml --values $ingress_values_file --values $ingressMeshAnnotationsFile  --set app.name=$app_name --set inf.k8s.dns=$dns --set image.tag=$image_tag --set image.pullPolicy=$imagePullPolicy $chart --set inf.mesh.enabled=$use_mesh
+    elif [[ $chart != "eshop-common" ]]; then  # eshop-common is ignored when no secret must be deployed      
+      helm install "$app_name-$chart" --namespace $namespace --set "ingress.hosts={$dns}" --values app.yaml --values inf.yaml --values $ingress_values_file --values $ingressMeshAnnotationsFile --set app.name=$app_name --set inf.k8s.dns=$dns --set image.tag=$image_tag --set image.pullPolicy=$imagePullPolicy $chart --set inf.mesh.enabled=$use_mesh
     fi
 done
 
 for gw in "${gateways[@]}"
 do
     echo "Installing gateway: $gw"
-    helm install "$app_name-$gw" --namespace $namespace --set "ingress.hosts={$dns}" --values app.yaml --values inf.yaml --values $ingress_values_file --set app.name=$app_name --set inf.k8s.dns=$dns --set image.pullPolicy=Always $gw 
-
+    helm install "$app_name-$gw" --namespace $namespace --set "ingress.hosts={$dns}" --values app.yaml --values inf.yaml --values $ingress_values_file --set app.name=$app_name --set inf.k8s.dns=$dns --set image.pullPolicy=$imagePullPolicy $gw 
 done
 
 echo "FINISHED: Helm charts installed."
