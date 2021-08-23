@@ -45,7 +45,7 @@ Parameters:
     Deploy to a locally installed Kubernetes (default: false).
   --use-mesh
     Use Linkerd as service mesh
-  --image-pull-policy
+  --image-pull-policy <policy>
     Image Pull Policy: Always, IfNotPresent, Never (default: Always)
 
 It is assumed that the Kubernetes cluster has been granted access to the container registry.
