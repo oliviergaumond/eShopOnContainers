@@ -77,13 +77,13 @@ echo $aks
 ```
 
 Go to the Repository settings in GitHub and create each of these secrets.
-REGISTRY_HOST -> <value of $acrHost> 
-REGISTRY_ENDPOINT -> <value of $acrHost>/eshop
-USERNAME -> <value of $spnId>
-PASSWORD -> <value of $spnPassword>
-CLUSTER_NAME -> <value of $aks>
-RESOURCE_GROUP -> <value of $rg>
-AZURE_CREDENTIALS -> { "clientId": "<value of $spnId>", "clientSecret": "<value of $spnPassword>", "tenantId": "<Azure tenant GUID>", "subscriptionId": "<Azure subscription ID>" }
+REGISTRY_HOST -> <value of $acrHost>  
+REGISTRY_ENDPOINT -> <value of $acrHost>/eshop  
+USERNAME -> <value of $spnId>  
+PASSWORD -> <value of $spnPassword>  
+CLUSTER_NAME -> <value of $aks>  
+RESOURCE_GROUP -> <value of $rg>  
+AZURE_CREDENTIALS -> { "clientId": "<value of $spnId>", "clientSecret": "<value of $spnPassword>", "tenantId": "<Azure tenant GUID>", "subscriptionId": "<Azure subscription ID>" }  
 
 The AZURE_CREDENTIALS secret is the one that will require the most manipulation, make sure to replace the proper values to form a valid JSON configuration. You can find your subscription and tenant ID from the Azure portal.
 
