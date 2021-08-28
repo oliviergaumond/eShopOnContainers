@@ -21,7 +21,8 @@ ingress:
 resources: {}
 
 
-nodeSelector: {}
+nodeSelector:
+  kubernetes.io/arch: amd64
 
 tolerations: []
 

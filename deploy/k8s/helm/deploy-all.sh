@@ -176,7 +176,7 @@ ingress_values_file="ingress_values.yaml"
 
 if [[ $use_local_k8s ]]; then
   ingress_values_file="ingress_values_dockerk8s.yaml"
-  dns="localhost"
+  #dns="localhost"
 fi
 
 if [[ $dns == "aks" ]]; then
