@@ -140,6 +140,7 @@ jobs:
       shell: bash
   
   ScanResult:
+    runs-on: ubuntu-latest
     if: always()
     needs: [BuildLinux]
     steps:
