@@ -28,5 +28,5 @@ Here are some future concepts I would like to explore and implement on the eShop
 - Configure auto-scaling of resources and test it by simulating ariable degree of traffic
 - Use Azure KeyVault for secrets management
 - Configure minimal RBAC access that would enable a dev team to deploy the eSHop app on a dedicated namespace on a Kubernetes cluster without full cluster admin access
-- 
+- Detect runtime vulnerabilities using Falco
 
