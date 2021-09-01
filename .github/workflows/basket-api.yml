@@ -117,9 +117,7 @@ jobs:
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: '${{ secrets.REGISTRY_ENDPOINT }}/${{ env.IMAGE }}:linux-${{ env.BRANCH }}'
-        format: 'template'
-        template: '@/contrib/sarif.tpl'
-        output: 'trivy-results.sarif'
+        format: 'table'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
@@ -139,12 +137,4 @@ jobs:
         docker --config ~/.docker manifest push ${{ secrets.REGISTRY_ENDPOINT  }}/${{ env.IMAGE  }}:${{ env.BRANCH  }}
       shell: bash
   
-  ScanResult:
-    runs-on: ubuntu-latest
-    if: always()
-    needs: [BuildLinux]
-    steps:
-     - name: Upload Trivy scan results to GitHub Security tab
-       uses: github/codeql-action/upload-sarif@v1
-       with:
-         sarif_file: 'trivy-results.sarif'
+
