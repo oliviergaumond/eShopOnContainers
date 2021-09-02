@@ -5,6 +5,7 @@ on:
   push:
     branches:
     - dev
+    - experiment/*
 
     paths:
     - src/BuildingBlocks/**
@@ -77,6 +78,15 @@ jobs:
       env:
         TAG: ${{ env.BRANCH }}
         REGISTRY: ${{ secrets.REGISTRY_ENDPOINT }}
+
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: '${{ secrets.REGISTRY_ENDPOINT }}/${{ env.IMAGE }}:linux-${{ env.BRANCH }}'
+        format: 'table'
+        exit-code: '1'
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'   
 
     - name: Compose push ${{ env.SERVICE }}
       run: sudo -E docker-compose push ${{ env.SERVICE }}
