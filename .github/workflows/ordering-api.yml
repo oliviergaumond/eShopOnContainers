@@ -117,7 +117,8 @@ jobs:
       with:
         image-ref: '${{ secrets.REGISTRY_ENDPOINT }}/${{ env.IMAGE }}:linux-${{ env.BRANCH }}'
         format: 'table'
-        exit-code: '1'
+        ignore-unfixed: true
+        exit-code: '1'        
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'   
 
