@@ -14,7 +14,7 @@ Branch: [experiment/aks-github-cicd)](https://github.com/oliviergaumond/eShopOnC
 
 ### Image scanning
 Goal: Add a step in the CI pipeline to automatically scan images for vulnerabilities and fail the build if vulnerabilities are found
-Article: In-Progress
+Article: [eShopOnContainers experiment with image scanning](https://medium.com/@olivier.gaumond/eshoponcontainers-experiment-with-image-scanning-21b73ac5c4b7)
 Branch (in-progress): [experiment/trivy-scan](https://github.com/oliviergaumond/eShopOnContainers/tree/experiment/trivy-scan)
 
 
