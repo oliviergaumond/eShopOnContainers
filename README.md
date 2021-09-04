@@ -8,14 +8,14 @@ I documented each experiment in an article and kept and specific branch isolatin
 ## Banches and experiments
 
 ### Fully automated deployment
-Goal: Consolidate in a single walkthrough all the steps needed to deploy the app to AKS with a fully automated CI/CD pipeline with GitHub Actions
-Article: [Walkthrough of eShop setup on Azure Kubernetes Services with GitHub Actions](https://faun.pub/walkthrough-of-eshop-setup-on-azure-kubernetes-services-and-github-actions-7fa74d6496c3)
-Branch: [experiment/aks-github-cicd)](https://github.com/oliviergaumond/eShopOnContainers/tree/experiment/aks-github-cicd)
+Goal: Consolidate in a single walkthrough all the steps needed to deploy the app to AKS with a fully automated CI/CD pipeline with GitHub Actions  
+Article: [Walkthrough of eShop setup on Azure Kubernetes Services with GitHub Actions](https://faun.pub/walkthrough-of-eshop-setup-on-azure-kubernetes-services-and-github-actions-7fa74d6496c3)  
+Branch: [experiment/aks-github-cicd)](https://github.com/oliviergaumond/eShopOnContainers/tree/experiment/aks-github-cicd)  
 
 ### Image scanning
-Goal: Add a step in the CI pipeline to automatically scan images for vulnerabilities and fail the build if vulnerabilities are found
-Article: [eShopOnContainers experiment with image scanning](https://medium.com/@olivier.gaumond/eshoponcontainers-experiment-with-image-scanning-21b73ac5c4b7)
-Branch (in-progress): [experiment/trivy-scan](https://github.com/oliviergaumond/eShopOnContainers/tree/experiment/trivy-scan)
+Goal: Add a step in the CI pipeline to automatically scan images for vulnerabilities and fail the build if vulnerabilities are found  
+Article: [eShopOnContainers experiment with image scanning](https://medium.com/@olivier.gaumond/eshoponcontainers-experiment-with-image-scanning-21b73ac5c4b7)  
+Branch: [experiment/trivy-scan](https://github.com/oliviergaumond/eShopOnContainers/tree/experiment/trivy-scan)  
 
 
 ## Roadmap
