@@ -10,8 +10,7 @@ on:
     paths:
     - src/BuildingBlocks/**
     - src/Services/Identity/**
-    - .github/workflows/identity-api.yml
-    - .github/workflows/composite/build/*
+    - .github/workflows/identity-api.yml    
     - .github/workflows/composite/build-push/*
   
   pull_request:
@@ -22,6 +21,7 @@ on:
     - src/BuildingBlocks/**
     - src/Services/Identity/**
     - .github/workflows/identity-api.yml
+    - .github/workflows/composite/build/*
 env:
   SERVICE: identity-api
   IMAGE: identity.api

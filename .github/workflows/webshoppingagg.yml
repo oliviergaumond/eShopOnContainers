@@ -9,6 +9,7 @@ on:
     paths:
     - src/ApiGateways/Web.Bff.Shopping/aggregator/**
     - .github/workflows/webshoppingagg.yml
+    - .github/workflows/composite/build-push/*
   
   pull_request:
     branches:
@@ -17,6 +18,7 @@ on:
     paths:
     - src/ApiGateways/Web.Bff.Shopping/aggregator/**
     - .github/workflows/webshoppingagg.yml
+    - .github/workflows/composite/build/*
 env:
   SERVICE: webshoppingagg
   IMAGE: webshoppingagg

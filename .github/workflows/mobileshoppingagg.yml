@@ -8,7 +8,8 @@ on:
 
     paths:
     - src/ApiGateways/Mobile.Bff.Shopping/aggregator/**
-    - .github/workflows/mobileshoppingagg.yml
+    - .github/workflows/mobileshoppingagg.yml    
+    - .github/workflows/composite/build-push/*
   
   pull_request:
     branches:
@@ -17,6 +18,7 @@ on:
     paths:
     - src/ApiGateways/Mobile.Bff.Shopping/aggregator/**
     - .github/workflows/mobileshoppingagg.yml
+    - .github/workflows/composite/build/*
 env:
   SERVICE: mobileshoppingagg
   IMAGE: mobileshoppingagg
