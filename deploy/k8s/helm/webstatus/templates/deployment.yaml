@@ -30,10 +30,21 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.inf.registry.secretName }}
       {{- end }}
+      securityContext:        
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile: 
+          type: RuntimeDefault        
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ template "fqdn-image" . }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}          
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: 
+                - ALL
           env:
             - name: PATH_BASE
               value: {{ include "pathBase" . }}
@@ -56,7 +67,7 @@ spec:
           {{- end }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
               protocol: TCP
           resources:
 {{ toYaml .Values.resources | indent 12 }}
